@@ -288,15 +288,6 @@ externalDocs:
   url: 'http://swagger.io'
 components:
   requestBodies:
-    UserArray:
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/User'
-      description: List of user object
-      required: true
     Pet:
       content:
         application/json:
