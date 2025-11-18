@@ -1,5 +1,4 @@
 // Replaced App to import and show CreatePet and SearchPet and to initialize the mock backend.
-import React from 'react';
 import './App.css';
 import CreatePet from './components/CreatePet';
 import SearchPet from './components/SearchPet';

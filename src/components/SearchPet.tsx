@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getPetById } from '../api/mockBackend';
-import { Pet } from '../api/petTypes';
+import type { Pet } from '../api/petTypes';
 
 export default function SearchPet() {
   const [idStr, setIdStr] = useState('');

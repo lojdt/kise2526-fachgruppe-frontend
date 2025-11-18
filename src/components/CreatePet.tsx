@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createPet } from '../api/mockBackend';
-import { Pet } from '../api/petTypes';
+import type { Pet } from '../api/petTypes';
 
 export default function CreatePet() {
   const [name, setName] = useState('');

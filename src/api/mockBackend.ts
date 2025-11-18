@@ -1,7 +1,7 @@
 // In-memory mock backend that implements the POST /pet and GET /pet/{petId} semantics.
 // Simulates small network delay and returns Promises similar to fetch-based APIs.
 
-import { Pet } from './petTypes';
+import { type Pet } from './petTypes';
 
 let currentId = 1000;
 const store = new Map<number, Pet>();
