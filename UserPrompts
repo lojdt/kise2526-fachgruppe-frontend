@@ -1,0 +1,10 @@
+Prompt NR. 1
+Build a frontend for creating and searching pets.
+
+Please follow these steps:
+
+    Analyze Context: Review the current project structure and the provided YAML file that defines the backend API endpoints.
+
+    Mock Backend: Mock the backend based on the interfaces described in that YAML file.
+
+    Verify: Finally, verify that the "Search Pet" (getById) and "Create Pet" (POST) functions are working correctly.
