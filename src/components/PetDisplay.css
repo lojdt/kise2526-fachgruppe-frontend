@@ -1,0 +1,26 @@
+.pet-display {
+  background-color: #444;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.pet-display h2 {
+  color: #F55500; /* Primary color */
+  margin-top: 0;
+}
+
+.pet-display img {
+  border: 1px solid #555;
+  border-radius: 4px;
+  max-width: 150px;
+  margin: 5px;
+}
+
+.pet-display .pet-photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}

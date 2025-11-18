@@ -1,0 +1,40 @@
+.pet-search {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.pet-search h2 {
+  color: #F55500; /* Primary color */
+  margin-top: 0;
+}
+
+.pet-search div {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.pet-search label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #ccc;
+}
+
+.pet-search input[type="number"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #444;
+  color: white;
+}
+
+.pet-search input:focus {
+  outline: none;
+  border-color: #F55500; /* Primary color on focus */
+}
