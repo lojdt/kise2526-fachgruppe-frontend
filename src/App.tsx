@@ -1,34 +1,38 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { CreatePet } from './components/CreatePet'
+import { SearchPet } from './components/SearchPet'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeTab, setActiveTab] = useState<'create' | 'search'>('create')
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="app">
+      <header className="app-header">
+        <h1>🐾 Pet Store</h1>
+        <p>Create and search for pets</p>
+      </header>
+
+      <nav className="app-nav">
+        <button 
+          className={`nav-button ${activeTab === 'create' ? 'active' : ''}`}
+          onClick={() => setActiveTab('create')}
+        >
+          Create Pet
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+        <button 
+          className={`nav-button ${activeTab === 'search' ? 'active' : ''}`}
+          onClick={() => setActiveTab('search')}
+        >
+          Search Pet
+        </button>
+      </nav>
+
+      <main className="app-main">
+        {activeTab === 'create' && <CreatePet />}
+        {activeTab === 'search' && <SearchPet />}
+      </main>
+    </div>
   )
 }
 
