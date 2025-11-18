@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// Replaced App to import and show CreatePet and SearchPet and to initialize the mock backend.
+import React from 'react';
+import './App.css';
+import CreatePet from './components/CreatePet';
+import SearchPet from './components/SearchPet';
+import { initializeMockBackend } from './api/mockBackend';
+
+initializeMockBackend();
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app">
+      <header className="app-header">
+        <h1>Petstore — Create & Search</h1>
+        <p className="subtitle">Primary color: #F55500 — Secondary color: #555555</p>
+      </header>
+
+      <main className="grid">
+        <CreatePet />
+        <SearchPet />
+      </main>
+
+      <footer className="footer">Mock backend based on petstore.openAPI.yaml</footer>
+    </div>
+  );
 }
 
-export default App
+export default App;
