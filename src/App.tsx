@@ -1,34 +1,43 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import CreatePet from './components/CreatePet'
+import SearchPet from './components/SearchPet'
 import './App.css'
 
+type Tab = 'search' | 'create';
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeTab, setActiveTab] = useState<Tab>('search')
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="app">
+      <header className="app-header">
+        <h1>🐾 Pet Store</h1>
+        <p>Create and search for pets</p>
+      </header>
+
+      <nav className="app-nav">
+        <button
+          className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}
+          onClick={() => setActiveTab('search')}
+        >
+          Search Pet
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+        <button
+          className={`tab-button ${activeTab === 'create' ? 'active' : ''}`}
+          onClick={() => setActiveTab('create')}
+        >
+          Create Pet
+        </button>
+      </nav>
+
+      <main className="app-content">
+        {activeTab === 'search' ? <SearchPet /> : <CreatePet />}
+      </main>
+
+      <footer className="app-footer">
+        <p>© 2025 Pet Store - Built with React & TypeScript</p>
+      </footer>
+    </div>
   )
 }
 
