@@ -1,27 +1,34 @@
-// Replaced App to import and show CreatePet and SearchPet and to initialize the mock backend.
 import './App.css';
 import CreatePet from './components/CreatePet';
 import SearchPet from './components/SearchPet';
-import { initializeMockBackend } from './api/mockBackend';
+import { initializeMock } from './services/petService';
 
-initializeMockBackend();
+// initialize mock storage with a sample pet if empty
+initializeMock();
 
 function App() {
-  return (
-    <div className="app">
-      <header className="app-header">
-        <h1>Petstore — Create & Search</h1>
-        <p className="subtitle">Primary color: #F55500 — Secondary color: #555555</p>
-      </header>
+    return (
+        <div className="app">
+            <header className="app-header">
+                <div>
+                    <h1>Petstore — Create & Search</h1>
+                    <div className="subtitle">Primary color: #F55500 — Secondary color: #555555</div>
+                </div>
+                <div className="logos">
+                    <a href="https://vite.dev" target="_blank" rel="noreferrer">
+                        <img src="/vite.svg" className="logo" alt="Vite" />
+                    </a>
+                </div>
+            </header>
 
-      <main className="grid">
-        <CreatePet />
-        <SearchPet />
-      </main>
+            <main className="grid">
+                <CreatePet />
+                <SearchPet />
+            </main>
 
-      <footer className="footer">Mock backend based on petstore.openAPI.yaml</footer>
-    </div>
-  );
+            <footer className="footer">This UI uses a local mock service that mirrors POST /pet and GET /pet/{'{petId}'}</footer>
+        </div>
+    );
 }
 
 export default App;
