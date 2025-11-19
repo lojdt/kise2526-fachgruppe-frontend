@@ -1,91 +1,36 @@
-// Lightweight mock service that mimics POST /pet and GET /pet/{petId}.
-// Stores data in localStorage so created pets persist across reloads during development.
-// This keeps the interface similar to a real async API (returns Promises, simulates small delay).
+// Use central types derived from OpenAPI
+import type { Pet as ApiPet } from '../api/petTypes';
+import { createPet as mockCreatePet, listAllPets } from '../api/mockBackend';
 
-import type { Pet } from '../api/petTypes';
 
-const STORAGE_KEY = 'petstore:mock:pets';
-const STORAGE_ID_KEY = 'petstore:mock:nextId';
+export type Pet = ApiPet & { id: number | undefined };
+export type NewPet = Omit<ApiPet, 'id'>;
 
-function readStore(): Pet[] {
-    try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return [];
-        return JSON.parse(raw) as Pet[];
-    } catch {
-        return [];
-    }
+/**
+ * searchPets uses the in-memory mock backend's listAllPets and filters locally.
+ * Supports optional name (substring, case-insensitive) and status filtering.
+ */
+export async function searchPets(params?: { name?: string; status?: string }): Promise<Pet[]> {
+    const all = listAllPets();
+    const name = params?.name?.trim().toLowerCase();
+    const status = params?.status?.trim().toLowerCase();
+
+    return all.filter((p) => {
+        if (name) {
+            const nm = (p.name || '').toLowerCase();
+            if (!nm.includes(name)) return false;
+        }
+        if (status) {
+            if (((p.status || '') as string).toLowerCase() !== status) return false;
+        }
+        return true;
+    }) as Pet[];
 }
 
-function writeStore(items: Pet[]) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-}
-
-function getNextId(): number {
-    const raw = localStorage.getItem(STORAGE_ID_KEY);
-    let id = raw ? Number(raw) : 1000;
-    id = id + 1;
-    localStorage.setItem(STORAGE_ID_KEY, String(id));
-    return id;
-}
-
-function delay<T>(ms: number, value: T): Promise<T> {
-    return new Promise((res) => setTimeout(() => res(value), ms));
-}
-
-// Initialize with sample pet if empty
-export function initializeMock() {
-    const items = readStore();
-    if (items.length === 0) {
-        const id = getNextId();
-        const sample: Pet = {
-            id,
-            name: 'doggie',
-            photoUrls: ['https://placekitten.com/200/200'],
-            status: 'available',
-            category: { id: 1, name: 'Dogs' },
-            tags: [{ id: 1, name: 'cute' }],
-        };
-        writeStore([sample]);
-    }
-}
-
-// Create a new pet (mimics POST /pet -> returns created Pet)
-export function createPet(payload: Omit<Pet, 'id'>): Promise<Pet> {
-    if (!payload || !payload.name || !payload.photoUrls || payload.photoUrls.length === 0) {
-        return Promise.reject({ status: 405, message: 'Invalid input: name and photoUrls are required' });
-    }
-
-    const items = readStore();
-    const id = getNextId();
-    const pet: Pet = { ...payload, id };
-    items.push(pet);
-    writeStore(items);
-
-    // Simulate network delay
-    return delay(300, pet);
-}
-
-// Get a pet by id (mimics GET /pet/{petId})
-export function getPetById(petId: number): Promise<Pet> {
-    if (!Number.isFinite(petId)) {
-        return Promise.reject({ status: 400, message: 'Invalid ID supplied' });
-    }
-    const items = readStore();
-    const p = items.find((x) => x.id === petId);
-    if (!p) {
-        return Promise.reject({ status: 404, message: 'Pet not found' });
-    }
-    return delay(200, p);
-}
-
-// Return all pets (helper for listing)
-export function listPets(): Promise<Pet[]> {
-    return delay(150, readStore());
-}
-
-// Clear store (development helper)
-export function clearStore() {
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(STORAGE_ID_KEY);
+/**
+ * createPet delegates to the mock backend createPet implementation.
+ */
+export async function createPet(pet: NewPet): Promise<Pet> {
+    // mockCreatePet already validates required fields and simulates delay
+    return mockCreatePet(pet) as Promise<Pet>;
 }

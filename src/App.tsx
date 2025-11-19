@@ -1,34 +1,37 @@
-import './App.css';
-import CreatePet from './components/CreatePet';
-import SearchPet from './components/SearchPet';
-import { initializeMock } from './services/petService';
+import { useState } from "react";
+import PetSearch from "./components/PetSearch";
+import PetCreate from "./components/PetCreate";
 
-// initialize mock storage with a sample pet if empty
-initializeMock();
+export default function App() {
+    const [view, setView] = useState<"search" | "create">("search");
 
-function App() {
     return (
         <div className="app">
             <header className="app-header">
-                <div>
-                    <h1>Petstore — Create & Search</h1>
-                    <div className="subtitle">Primary color: #F55500 — Secondary color: #555555</div>
-                </div>
-                <div className="logos">
-                    <a href="https://vite.dev" target="_blank" rel="noreferrer">
-                        <img src="/vite.svg" className="logo" alt="Vite" />
-                    </a>
-                </div>
+                <h1 className="brand">Pet Store</h1>
+                <nav className="nav">
+                    <button
+                        className={`nav-btn ${view === "search" ? "active" : ""}`}
+                        onClick={() => setView("search")}
+                    >
+                        Search Pets
+                    </button>
+                    <button
+                        className={`nav-btn ${view === "create" ? "active" : ""}`}
+                        onClick={() => setView("create")}
+                    >
+                        Add Pet
+                    </button>
+                </nav>
             </header>
 
-            <main className="grid">
-                <CreatePet />
-                <SearchPet />
+            <main className="container">
+                {view === "search" ? <PetSearch /> : <PetCreate />}
             </main>
 
-            <footer className="footer">This UI uses a local mock service that mirrors POST /pet and GET /pet/{'{petId}'}</footer>
+            <footer className="footer">
+                <small>Primary: #F55500 — Secondary: #555555</small>
+            </footer>
         </div>
     );
 }
-
-export default App;

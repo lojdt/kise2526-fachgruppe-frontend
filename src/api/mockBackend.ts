@@ -14,8 +14,8 @@ function delay<T>(ms: number, value: T): Promise<T> {
 export function initializeMockBackend() {
   const sample: Pet = {
     id: ++currentId,
-    name: 'doggie',
-    photoUrls: ['https://placekitten.com/200/200'],
+    name: 'buddy',
+    photoUrls: ['https://image.geo.de/30150772/t/4G/v3/w1440/r0/-/wolfhund-jpg--86015-.jpg'],
     status: 'available',
     category: { id: 1, name: 'Dogs' },
     tags: [{ id: 1, name: 'cute' }],
